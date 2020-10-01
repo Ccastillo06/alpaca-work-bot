@@ -1,15 +1,20 @@
 {
-  "name": "alpaca-test-bot",
+  "name": "test-discord-bot",
   "version": "1.0.0",
-  "description": "",
+  "description": "Test bot made to learn how to make Discord bots work with external APIs and libraries",
   "main": "index.js",
   "scripts": {
     "start": "node .",
     "dev": "nodemon ."
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "discord",
+    "bot",
+    "node",
+    "api"
+  ],
+  "author": "https://github.com/Ccastillo06",
+  "license": "MIT",
   "dependencies": {
     "discord.js": "^12.3.1",
     "dotenv": "^8.2.0",
