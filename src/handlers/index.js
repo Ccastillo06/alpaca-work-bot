@@ -1,11 +1,9 @@
 import ping from './ping'
-import choose from './choose'
-import rates from './rates'
-import op from './op'
+import start from './start'
+import stop from './stop'
 
 export default {
   ping,
-  choose,
-  rates,
-  op
+  start,
+  stop
 }

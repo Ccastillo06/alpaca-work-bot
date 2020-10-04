@@ -4,7 +4,7 @@ const defaultBase = 'USD'
 const url = 'https://api.exchangeratesapi.io/latest'
 
 // Command example: !!rates>USD
-function handler(message, args) {
+export default function handler(message, args) {
   const base = (args[0] || '').trim().toUpperCase()
   const urlWithBase = `${url}?base=${base || defaultBase}`
 
@@ -29,5 +29,3 @@ function handler(message, args) {
       message.reply('Rates API is currently unavailable...')
     })
 }
-
-module.exports = handler

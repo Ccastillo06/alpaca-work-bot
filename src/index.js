@@ -9,7 +9,7 @@ const client = new Discord.Client()
 client.on('message', function (message) {
   if (message.author.bot) return
   if (!message.content.startsWith(prefix)) return
-
+  
   const [command, args] = parseCommandAndArgs(message)
 
   const handler = handlers[command]
