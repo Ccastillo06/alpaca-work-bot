@@ -13,13 +13,14 @@ admin.initializeApp({
 
 const db = admin.firestore()
 
-export const saveNewSession = ({ discordId, username, startTime, isFinished = false }) =>
+export const saveNewSession = ({ discordId, username, startTime, isFinished = false, subject }) =>
   db.collection(workSessionCollection).add(
     cleanPayload({
       discordId,
       username,
       startTime,
-      isFinished
+      isFinished,
+      subject
     })
   )
 

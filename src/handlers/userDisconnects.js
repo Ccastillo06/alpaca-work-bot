@@ -21,7 +21,7 @@ export default async function handler(
     removeWorkingRoleFromUser(afterMember)
 
     botsChannelData.send(
-      `<@${afterUserId}> ha cambiado su status de ${beforeStatus} a ${afterStatus} y estaba trajando 😱. ¡Cerramos su aventura de hoy después de ${formattedTimeSpent} a tope 🚀!`
+      `<@${afterUserId}> ha cambiado su status de **${beforeStatus}** a **${afterStatus}** y estaba trabajando 😱. ¡Cerramos su aventura de hoy después de **${formattedTimeSpent}** a tope 🚀!`
     )
   }
 }

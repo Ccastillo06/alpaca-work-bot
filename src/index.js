@@ -4,7 +4,7 @@ import Discord from 'discord.js'
 
 import { messageHandlers, presenceUpdateHandlers } from './handlers'
 import { parseCommandAndArgs, prefix } from './utils/message'
-import { hasUserDisconnected } from './utils/status'
+import { hasUserDisconnected, offline } from './utils/status'
 
 const client = new Discord.Client()
 
@@ -12,6 +12,7 @@ const client = new Discord.Client()
 client.on('message', function (message) {
   if (message.author.bot) return
   if (!message.content.startsWith(prefix)) return
+  if (message.member.user.presence.status === offline) return
 
   const [command, args] = parseCommandAndArgs(message)
 
@@ -39,10 +40,5 @@ client.on('presenceUpdate', (userBefore = {}, userAfter = {}) => {
     )
   }
 })
-
-// // Listen to user role changes (eg. Admin => SuperAdmin)
-// client.on('guildMemberUpdate', (_guild, memberUpdated) => {
-//   console.log('member updated', memberUpdated)
-// })
 
 client.login(process.env.BOT_TOKEN)

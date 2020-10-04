@@ -1,7 +1,7 @@
 {
-  "name": "test-discord-bot",
+  "name": "alpaca-work-bot",
   "version": "1.0.0",
-  "description": "Test bot made to learn how to make Discord bots work with external APIs and libraries",
+  "description": "Alpaca bot made to control work sessions using Discord",
   "main": "src/index.js",
   "scripts": {
     "build": "babel src -d dist",
