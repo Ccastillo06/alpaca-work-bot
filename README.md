@@ -8,6 +8,12 @@ This is a simple Discord bot project already configured to work by just followin
 
 To create new functions just replicate some of the files in the `handlers` folder and import it in `index.js`.
 
+## Using Firebase Admin SDK
+
+In order to connect your project with **Firebase** you should first download your admin credentials in `json` format from [Firebase Control Panel](https://console.firebase.google.com/project/YOUR_PROJECT/settings/serviceaccounts/adminsdk).
+
+Update the import in `firebase.js` to connect with the firebase services you want to use.
+
 ## Additional info:
 
 Authors in the `message.author` variable come with this format:
