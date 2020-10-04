@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import './dotenv'
 import Discord from 'discord.js'
 
@@ -9,7 +10,7 @@ const client = new Discord.Client()
 client.on('message', function (message) {
   if (message.author.bot) return
   if (!message.content.startsWith(prefix)) return
-  
+
   const [command, args] = parseCommandAndArgs(message)
 
   const handler = handlers[command]

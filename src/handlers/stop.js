@@ -1,20 +1,30 @@
 import { format } from 'date-fns'
 
 import { getUserHasWorkingRole, removeWorkingRoleFromUser } from '../utils/roles'
+import { finishSession } from '../firebase'
 
 // Command example: !!stop
-export default function handler(message) {
+export default async function handler(message) {
   if (!getUserHasWorkingRole(message)) {
     message.reply(`no estás trabajando todavía! 😴`)
     return
   }
 
   const now = new Date()
+  const { id, username } = message.author
+
+  const minutesSpent = await finishSession({
+    discordId: id,
+    username,
+    endTime: now.getTime(),
+    isFinished: true
+  })
+
   const hour = format(now, 'hh:mm:ss')
   const day = format(now, 'dd-MM-yyyy')
 
-  // @TODO Add user data to database...
-  // const { id, username } = message.author
   removeWorkingRoleFromUser(message)
-  message.reply(`ha terminado a trabajar a las ${hour} de hoy (${day}). ¿Ha sido un rato productivo? 🐂`)
+  message.reply(
+    `ha terminado a trabajar a las ${hour} de hoy (${day}), un total de ${minutesSpent} minutos. ¿Ha sido un rato productivo? 🐂`
+  )
 }
