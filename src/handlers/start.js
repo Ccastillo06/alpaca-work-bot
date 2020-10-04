@@ -5,7 +5,7 @@ import { saveNewSession } from '../firebase'
 
 // Command example: !!start
 export default async function handler(message) {
-  if (getUserHasWorkingRole(message)) {
+  if (getUserHasWorkingRole(message.member)) {
     message.reply(`ya estás trabajando! 🤓`)
     return
   }
@@ -23,7 +23,7 @@ export default async function handler(message) {
   const hour = format(now, 'HH:mm:ss')
   const day = format(now, 'dd-MM-yyyy')
 
-  addWorkingRoleToUser(message)
+  addWorkingRoleToUser(message.member)
   message.reply(
     `ha empezado a trabajar a las ${hour} de hoy (${day}). ¡Mucha suerte en tu aventura! 🚀`
   )

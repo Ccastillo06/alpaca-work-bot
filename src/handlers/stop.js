@@ -5,7 +5,7 @@ import { finishSession } from '../firebase'
 
 // Command example: !!stop
 export default async function handler(message) {
-  if (!getUserHasWorkingRole(message)) {
+  if (!getUserHasWorkingRole(message.member)) {
     message.reply(`no estás trabajando todavía! 😴`)
     return
   }
@@ -23,7 +23,7 @@ export default async function handler(message) {
   const hour = format(now, 'HH:mm:ss')
   const day = format(now, 'dd-MM-yyyy')
 
-  removeWorkingRoleFromUser(message)
+  removeWorkingRoleFromUser(message.member)
   message.reply(
     `ha terminado a trabajar a las ${hour} de hoy (${day}), un total de **${formattedTimeSpent}**. ¿Ha sido un rato productivo? 🐂`
   )

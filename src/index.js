@@ -2,34 +2,47 @@ import 'babel-polyfill'
 import './dotenv'
 import Discord from 'discord.js'
 
-import handlers from './handlers'
+import { messageHandlers, presenceUpdateHandlers } from './handlers'
 import { parseCommandAndArgs, prefix } from './utils/message'
+import { hasUserDisconnected } from './utils/status'
 
 const client = new Discord.Client()
 
+// Listen to user messages in channel
 client.on('message', function (message) {
   if (message.author.bot) return
   if (!message.content.startsWith(prefix)) return
 
   const [command, args] = parseCommandAndArgs(message)
 
-  const handler = handlers[command]
+  const handler = messageHandlers[command]
   if (handler) {
     handler(message, args)
   }
 })
 
-// when user disconnects, connects...
-client.on('presenceUpdate', (_userBefore, userAfter) => {
-  console.log('userAfter:', userAfter)
-  console.log(userAfter.userID, userAfter.status)
-  console.log(userAfter.member.roles.cache.map(role => role.name))
+// When user disconnects, connects, goes idle or to do not disturb modes
+client.on('presenceUpdate', (userBefore = {}, userAfter = {}) => {
+  const { status: beforeStatus } = userBefore
+  const {
+    userID: afterUserId,
+    user: { username: afterUsername },
+    status: afterStatus,
+    member: afterMember,
+    guild: afterGuild
+  } = userAfter
+
+  if (hasUserDisconnected(beforeStatus, afterStatus)) {
+    presenceUpdateHandlers.userDisconnects(
+      { beforeStatus },
+      { afterUserId, afterUsername, afterStatus, afterMember, afterGuild }
+    )
+  }
 })
 
-// when updating roles...
-client.on('guildMemberUpdate', (_guild, memberUpdated) => {
-  console.log('member updated', memberUpdated)
-  // console.log(memberUpdated.roles.cache.find(role => role.name === 'Trabajando'))
-})
+// // Listen to user role changes (eg. Admin => SuperAdmin)
+// client.on('guildMemberUpdate', (_guild, memberUpdated) => {
+//   console.log('member updated', memberUpdated)
+// })
 
 client.login(process.env.BOT_TOKEN)
