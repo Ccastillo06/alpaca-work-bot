@@ -1,4 +1,4 @@
-import 'babel-polyfill';
+import 'babel-polyfill'
 import './dotenv'
 import Discord from 'discord.js'
 
@@ -17,6 +17,19 @@ client.on('message', function (message) {
   if (handler) {
     handler(message, args)
   }
+})
+
+// when user disconnects, connects...
+client.on('presenceUpdate', (_userBefore, userAfter) => {
+  console.log('userAfter:', userAfter)
+  console.log(userAfter.userID, userAfter.status)
+  console.log(userAfter.member.roles.cache.map(role => role.name))
+})
+
+// when updating roles...
+client.on('guildMemberUpdate', (_guild, memberUpdated) => {
+  console.log('member updated', memberUpdated)
+  // console.log(memberUpdated.roles.cache.find(role => role.name === 'Trabajando'))
 })
 
 client.login(process.env.BOT_TOKEN)
