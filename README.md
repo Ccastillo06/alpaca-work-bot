@@ -21,6 +21,7 @@ Update the environment variables in the same order as they are in `env.dist` but
 ## Available Commands
 
 - **!!help** => Returns all available commands.
+- **!!me** => Returns user id, username and discriminator.
 - **!!ping** => Returns the bot answer latency and a link to download your current user avatar.
 - **!!start** => Generates a new **session** document in Firebase with the current working session `startTime` and `subject`. Also appends the `workingRole` you configured in your server to the current user.
 - **!!stop** => End the previous **session** document in Firebase with the current working session `endTime` and `timeSpent`.
@@ -34,3 +35,4 @@ In case any user **disconnects** while having `workingRole` active, Alpaca Work 
 ## Heroku commands:
 
 - Stop dyno: `heroku ps:scale web=0`
+- Start dyno: `heroku ps:scale web=1`

@@ -13,12 +13,14 @@ export default async function handler(message, args) {
   }
 
   const now = new Date()
-  const { id, username } = message.author
+  const { id, username, discriminator } = message.author
+
   const subject = args[0]
 
   await saveNewSession({
     discordId: id,
     username,
+    discriminator,
     startTime: now.getTime(),
     isFinished: false,
     subject

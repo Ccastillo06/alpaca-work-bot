@@ -13,11 +13,12 @@ export default async function handler(message) {
   }
 
   const now = new Date()
-  const { id, username } = message.author
+  const { id, username, discriminator } = message.author
 
   const formattedTimeSpent = await finishSession({
     discordId: id,
     username,
+    discriminator,
     endTime: now.getTime(),
     isFinished: true
   })

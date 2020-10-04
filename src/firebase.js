@@ -23,22 +23,37 @@ admin.initializeApp({
 
 const db = admin.firestore()
 
-export const saveNewSession = ({ discordId, username, startTime, isFinished = false, subject }) =>
+export const saveNewSession = ({
+  discordId,
+  username,
+  discriminator,
+  startTime,
+  isFinished = false,
+  subject
+}) =>
   db.collection(workSessionCollection).add(
     cleanPayload({
       discordId,
       username,
+      discriminator,
       startTime,
       isFinished,
       subject
     })
   )
 
-export const finishSession = async ({ discordId, username, endTime, isFinished = true }) => {
+export const finishSession = async ({
+  discordId,
+  username,
+  discriminator,
+  endTime,
+  isFinished = true
+}) => {
   const sessionRef = await db
     .collection(workSessionCollection)
     .where('discordId', '==', discordId)
     .where('username', '==', username)
+    .where('discriminator', '==', discriminator)
     .where('isFinished', '==', false)
     .limit(1) // This is due to users having only one session at a time
     .get()
