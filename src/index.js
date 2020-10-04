@@ -1,5 +1,7 @@
 import 'babel-polyfill'
 import './dotenv'
+import './server'
+
 import Discord from 'discord.js'
 
 import { messageHandlers, presenceUpdateHandlers } from './handlers'
