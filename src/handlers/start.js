@@ -1,7 +1,9 @@
-import { format } from 'date-fns'
+import format from 'date-fns/format'
+import addHours from 'date-fns/addHours'
 
 import { getUserHasWorkingRole, addWorkingRoleToUser } from '../utils/roles'
 import { saveNewSession } from '../firebase'
+import { hoursToAdd } from '../utils/formatTime'
 
 // Command example: !!start
 export default async function handler(message, args) {
@@ -13,7 +15,7 @@ export default async function handler(message, args) {
   const now = new Date()
   const { id, username } = message.author
   const subject = args[0]
-  
+
   await saveNewSession({
     discordId: id,
     username,
@@ -22,7 +24,7 @@ export default async function handler(message, args) {
     subject
   })
 
-  const hour = format(now, 'HH:mm:ss')
+  const hour = format(addHours(now, hoursToAdd), 'HH:mm:ss')
   const day = format(now, 'dd-MM-yyyy')
 
   addWorkingRoleToUser(message.member)

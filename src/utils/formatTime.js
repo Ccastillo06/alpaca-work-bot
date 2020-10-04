@@ -3,6 +3,8 @@ import getMinutes from 'date-fns/getMinutes'
 import getSeconds from 'date-fns/getSeconds'
 import addHours from 'date-fns/addHours'
 
+export const hoursToAdd = process.env.HOURS_TO_ADD || 0
+
 const normalizeTime = (time) => (time.length === 1 ? `0${time}` : time)
 
 const MINUTES_IN_HOUR = 60

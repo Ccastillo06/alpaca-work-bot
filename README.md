@@ -26,3 +26,11 @@ Update the environment variables in the same order as they are in `env.dist` but
 - **!!stop** => End the previous **session** document in Firebase with the current working session `endTime` and `timeSpent`.
 
 In case any user **disconnects** while having `workingRole` active, Alpaca Work Bot will automatically run the `stop` handler for that user.
+
+## Next steps:
+
+- If any user sends **`!!start`** after having an active working session, let them decide on continuing with that session or start a new one.
+
+## Heroku commands:
+
+- Stop dyno: `heroku ps:scale web=0`
