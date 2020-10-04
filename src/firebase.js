@@ -1,8 +1,8 @@
 import admin from 'firebase-admin'
-import { differenceInMinutes } from 'date-fns'
 
 import serviceAccount from '../firebase-config.json'
 import { cleanPayload } from './utils/cleanPayload'
+import { getDurationBetweenDates } from './utils/formatTime'
 
 export const workSessionCollection = 'sessions'
 
@@ -37,19 +37,19 @@ export const finishSession = async ({ discordId, username, endTime, isFinished =
     const { id } = doc
     const { startTime } = doc.data()
 
-    const timeSpent = new Date(endTime) - new Date(startTime)
+    const { miliseconds, formatted } = getDurationBetweenDates(endTime, startTime)
 
-    const minutes = differenceInMinutes(new Date(endTime), new Date(startTime))
+    await db
+      .collection(workSessionCollection)
+      .doc(id)
+      .update(
+        cleanPayload({
+          endTime,
+          isFinished,
+          timeSpent: miliseconds
+        })
+      )
 
-    await db.collection(workSessionCollection).doc(id).update(
-      cleanPayload({
-        endTime,
-        isFinished,
-        timeSpent
-      })
-    )
-
-    // @TODO Return time correctly formatted
-    return minutes
+    return formatted
   }
 }

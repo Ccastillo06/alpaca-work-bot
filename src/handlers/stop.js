@@ -13,18 +13,18 @@ export default async function handler(message) {
   const now = new Date()
   const { id, username } = message.author
 
-  const minutesSpent = await finishSession({
+  const formattedTimeSpent = await finishSession({
     discordId: id,
     username,
     endTime: now.getTime(),
     isFinished: true
   })
 
-  const hour = format(now, 'hh:mm:ss')
+  const hour = format(now, 'HH:mm:ss')
   const day = format(now, 'dd-MM-yyyy')
 
   removeWorkingRoleFromUser(message)
   message.reply(
-    `ha terminado a trabajar a las ${hour} de hoy (${day}), un total de ${minutesSpent} minutos. ¿Ha sido un rato productivo? 🐂`
+    `ha terminado a trabajar a las ${hour} de hoy (${day}), un total de **${formattedTimeSpent}**. ¿Ha sido un rato productivo? 🐂`
   )
 }

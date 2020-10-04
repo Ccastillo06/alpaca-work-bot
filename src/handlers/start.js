@@ -20,7 +20,7 @@ export default async function handler(message) {
     isFinished: false
   })
 
-  const hour = format(now, 'hh:mm:ss')
+  const hour = format(now, 'HH:mm:ss')
   const day = format(now, 'dd-MM-yyyy')
 
   addWorkingRoleToUser(message)
