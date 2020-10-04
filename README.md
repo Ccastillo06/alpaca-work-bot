@@ -8,25 +8,21 @@ This is a simple Discord bot project already configured to work by just followin
 
 To create new functions just replicate some of the files in the `handlers` folder and import it in `index.js`.
 
+---
+
 ## Using Firebase Admin SDK
 
 In order to connect your project with **Firebase** you should first download your admin credentials in `json` format from [Firebase Control Panel](https://console.firebase.google.com/project/YOUR_PROJECT/settings/serviceaccounts/adminsdk).
 
 Update the import in `firebase.js` to connect with the firebase services you want to use.
 
-## Additional info:
+---
 
-Authors in the `message.author` variable come with this format:
+## Available Commands
 
-```
-// Using TypeScript to define an interface...
+- **!!help** => Returns all available commands.
+- **!!ping** => Returns the bot answer latency and a link to download your current user avatar.
+- **!!start** => Generates a new **session** document in Firebase with the current working session `startTime` and `subject`. Also appends the `workingRole` you configured in your server to the current user. 
+- **!!stop** => End the previous **session** document in Firebase with the current working session `endTime` and `timeSpent`.
 
-interface AuthorI {
-  id: String;
-  username: string;
-  bot: false,
-  discriminator: String;
-  avatar: String;
-  // Some more fields..
-}
-```
+In case any user **disconnects** while having `workingRole` active, Alpaca Work Bot will automatically run the `stop` handler for that user. 
