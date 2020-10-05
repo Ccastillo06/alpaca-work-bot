@@ -4,7 +4,7 @@ import { finishSession } from '../firebase'
 
 export default async function handler(
   { beforeStatus },
-  { afterUserId, afterUsername, afterStatus, afterMember, afterGuild }
+  { afterUserId, afterUsername, afterDiscriminator, afterStatus, afterMember, afterGuild }
 ) {
   const hasDisconnectedWithWorkingRole = getUserHasWorkingRole(afterMember)
 
@@ -14,6 +14,7 @@ export default async function handler(
     const formattedTimeSpent = await finishSession({
       discordId: afterUserId,
       username: afterUsername,
+      discriminator: afterDiscriminator,
       endTime: now.getTime(),
       isFinished: true
     })

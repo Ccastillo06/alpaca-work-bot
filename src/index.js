@@ -29,7 +29,7 @@ client.on('presenceUpdate', (userBefore = {}, userAfter = {}) => {
   const { status: beforeStatus } = userBefore
   const {
     userID: afterUserId,
-    user: { username: afterUsername },
+    user: { username: afterUsername, discriminator: afterDiscriminator },
     status: afterStatus,
     member: afterMember,
     guild: afterGuild
@@ -38,7 +38,7 @@ client.on('presenceUpdate', (userBefore = {}, userAfter = {}) => {
   if (hasUserDisconnected(beforeStatus, afterStatus)) {
     presenceUpdateHandlers.userDisconnects(
       { beforeStatus },
-      { afterUserId, afterUsername, afterStatus, afterMember, afterGuild }
+      { afterUserId, afterUsername, afterDiscriminator, afterStatus, afterMember, afterGuild }
     )
   }
 })

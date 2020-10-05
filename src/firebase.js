@@ -49,6 +49,13 @@ export const finishSession = async ({
   endTime,
   isFinished = true
 }) => {
+  console.log({
+    discordId,
+    username,
+    discriminator,
+    endTime,
+    isFinished
+  })
   const sessionRef = await db
     .collection(workSessionCollection)
     .where('discordId', '==', discordId)
