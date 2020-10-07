@@ -44,22 +44,13 @@ export const saveNewSession = ({
 
 export const finishSession = async ({
   discordId,
-  username,
   discriminator,
   endTime,
   isFinished = true
 }) => {
-  console.log({
-    discordId,
-    username,
-    discriminator,
-    endTime,
-    isFinished
-  })
   const sessionRef = await db
     .collection(workSessionCollection)
     .where('discordId', '==', discordId)
-    .where('username', '==', username)
     .where('discriminator', '==', discriminator)
     .where('isFinished', '==', false)
     .limit(1) // This is due to users having only one session at a time
