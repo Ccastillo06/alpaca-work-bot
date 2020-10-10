@@ -21,16 +21,14 @@ Update the environment variables in the same order as they are in `env.dist` but
 ## Available Commands
 
 - **!!help** => Returns all available commands.
+- **!!subjects** => Returns all subjects some user has worked on.
+- **!!latest** => Returns the latest work session for this user.
 - **!!me** => Returns user id, username and discriminator.
 - **!!ping** => Returns the bot answer latency and a link to download your current user avatar.
 - **!!start** => Generates a new **session** document in Firebase with the current working session `startTime` and `subject`. Also appends the `workingRole` you configured in your server to the current user.
 - **!!stop** => End the previous **session** document in Firebase with the current working session `endTime` and `timeSpent`.
 
 In case any user **disconnects** while having `workingRole` active, Alpaca Work Bot will automatically run the `stop` handler for that user.
-
-## Next steps:
-
-- If any user sends **`!!start`** after having an active working session, let them decide on continuing with that session or start a new one.
 
 ## Heroku commands:
 

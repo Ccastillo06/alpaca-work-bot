@@ -1,4 +1,4 @@
-const botsChannel = 'bots'
+const botsChannel = 'bot-commands'
 
 export const getChannelNames = (guild) => guild.channels.cache.map((cache) => cache.name)
 export const getChannelData = (guild, channelName) =>

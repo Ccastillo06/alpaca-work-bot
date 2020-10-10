@@ -42,12 +42,7 @@ export const saveNewSession = ({
     })
   )
 
-export const finishSession = async ({
-  discordId,
-  discriminator,
-  endTime,
-  isFinished = true
-}) => {
+export const finishSession = async ({ discordId, discriminator, endTime, isFinished = true }) => {
   const sessionRef = await db
     .collection(workSessionCollection)
     .where('discordId', '==', discordId)
@@ -56,7 +51,7 @@ export const finishSession = async ({
     .limit(1) // This is due to users having only one session at a time
     .get()
 
-  if (!sessionRef.empty) {
+  if (!sessionRef.empty && sessionRef.docs.length) {
     const doc = sessionRef.docs[0]
     const { id } = doc
     const { startTime } = doc.data()
@@ -76,4 +71,50 @@ export const finishSession = async ({
 
     return formatted
   }
+
+  return null
 }
+
+export const getUserSubjects = async ({ discordId }) => {
+  const sessionRefs = await db
+    .collection(workSessionCollection)
+    .where('discordId', '==', discordId)
+    .get()
+
+  if (!sessionRefs.empty) {
+    // Retrieve all subjects and clean the undefined ones
+    const allSubjects = sessionRefs.docs.map((snapshot) => snapshot.data()?.subject).filter(Boolean)
+
+    // Remove duplicates
+    return [...new Set(allSubjects)]
+  }
+
+  return []
+}
+
+export const getLatestSession = async ({ discordId }) => {
+  const sessionRefs = await db
+    .collection(workSessionCollection)
+    .where('discordId', '==', discordId)
+    .orderBy('endTime', 'desc')
+    .limit(1)
+    .get()
+
+  if (!sessionRefs.empty && sessionRefs.docs.length) {
+    const session = sessionRefs.docs[0]
+    return [session.id, session.data()]
+  }
+
+  return null
+}
+
+export const removeSession = ({ sessionId }) =>
+  db.collection(workSessionCollection).doc(sessionId).delete()
+
+export const updateSessionEndTime = ({ sessionId, endTime, timeSpent }) =>
+  db.collection(workSessionCollection).doc(sessionId).update(
+    cleanPayload({
+      endTime,
+      timeSpent
+    })
+  )

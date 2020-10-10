@@ -1,9 +1,11 @@
+import format from 'date-fns/format'
+import addHours from 'date-fns/addHours'
 import getHours from 'date-fns/getHours'
 import getMinutes from 'date-fns/getMinutes'
 import getSeconds from 'date-fns/getSeconds'
-import addHours from 'date-fns/addHours'
 
 export const hoursToAdd = process.env.HOURS_TO_ADD || 0
+export const getHoursWithAddedTime = (ms) => format(addHours(new Date(ms), hoursToAdd), 'HH:mm:ss')
 
 const normalizeTime = (time) => (time.length === 1 ? `0${time}` : time)
 
