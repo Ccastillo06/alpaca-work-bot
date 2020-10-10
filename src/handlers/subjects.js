@@ -1,6 +1,6 @@
 import { getUserSubjects } from '../firebase'
 
-// Command example: !!start
+// Command example: !!subjects
 export default async function handler(message, args) {
   const { id } = message.author
   const subjects = await getUserSubjects({ discordId: id })
