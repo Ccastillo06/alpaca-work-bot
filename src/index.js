@@ -4,9 +4,10 @@ import './server'
 
 import Discord from 'discord.js'
 
-import { messageHandlers, presenceUpdateHandlers } from './handlers'
+import { messageHandlers, presenceUpdateHandlers, guildMemberUpdateHandlers } from './handlers'
 import { parseCommandAndArgs, prefix } from './utils/message'
 import { hasUserDisconnected, offline } from './utils/status'
+import { getUserHasWorkingRole } from './utils/roles'
 
 const client = new Discord.Client()
 
@@ -40,6 +41,14 @@ client.on('presenceUpdate', (userBefore = {}, userAfter = {}) => {
       { beforeStatus },
       { afterUserId, afterUsername, afterDiscriminator, afterStatus, afterMember, afterGuild }
     )
+  }
+})
+
+client.on('guildMemberUpdate', (userBefore, userAfter) => {
+  const hasStoppedWorking = getUserHasWorkingRole(userBefore) && !getUserHasWorkingRole(userAfter)
+
+  if (hasStoppedWorking) {
+    guildMemberUpdateHandlers.userChangesRole(userBefore, userAfter)
   }
 })
 

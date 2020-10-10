@@ -4,6 +4,7 @@ import start from './start'
 import stop from './stop'
 import me from './me'
 import userDisconnects from './userDisconnects'
+import userChangesRole from './userChangesRole'
 
 export const messageHandlers = {
   help,
@@ -15,4 +16,8 @@ export const messageHandlers = {
 
 export const presenceUpdateHandlers = {
   userDisconnects
+}
+
+export const guildMemberUpdateHandlers = {
+  userChangesRole
 }
