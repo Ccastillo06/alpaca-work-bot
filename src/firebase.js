@@ -42,12 +42,7 @@ export const saveNewSession = ({
     })
   )
 
-export const finishSession = async ({
-  discordId,
-  discriminator,
-  endTime,
-  isFinished = true
-}) => {
+export const finishSession = async ({ discordId, discriminator, endTime, isFinished = true }) => {
   const sessionRef = await db
     .collection(workSessionCollection)
     .where('discordId', '==', discordId)
@@ -76,4 +71,21 @@ export const finishSession = async ({
 
     return formatted
   }
+}
+
+export const getUserSubjects = async ({ discordId }) => {
+  const sessionRefs = await db
+    .collection(workSessionCollection)
+    .where('discordId', '==', discordId)
+    .get()
+
+  if (!sessionRefs.empty) {
+    // Retrieve all subjects and clean the undefined ones
+    const allSubjects = sessionRefs.docs.map((snapshot) => snapshot.data()?.subject).filter(Boolean)
+
+    // Remove duplicates
+    return [...new Set(allSubjects)]
+  }
+
+  return []
 }
