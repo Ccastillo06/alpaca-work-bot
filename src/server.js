@@ -1,16 +1,37 @@
-import http from 'http'
+import Fastify from 'fastify'
+import cors from 'fastify-cors'
 
-const requestHandler = (req, res) => {
-  if (req.url === '/') {
-    res.setHeader('Content-Type', 'application/json')
-    res.writeHead(200)
-    res.end('Alpaca Work Bot is alive!')
+const fastify = Fastify({ logger: true })
+
+fastify.register(cors, { origin: true })
+
+fastify.route({
+  method: 'GET',
+  url: '/',
+  schema: {
+    response: {
+      200: {
+        type: 'object',
+        properties: {
+          data: { type: 'string' }
+        }
+      }
+    }
+  },
+  handler: (_request, reply) => {
+    reply.send({ data: 'Alpaca Work Bot is Alive!' })
+  }
+})
+
+const PORT = process.env.PORT || 3000
+const start = async () => {
+  try {
+    await fastify.listen(PORT)
+    fastify.log.info(`server listening on ${fastify.server.address().port}`)
+  } catch (err) {
+    fastify.log.error(err)
+    process.exit(1)
   }
 }
 
-const PORT = process.env.PORT || 3000
-const server = http.createServer(requestHandler)
-
-server.listen(PORT, () => {
-  console.log(`Server started in http://localhost:${PORT}`)
-})
+start()

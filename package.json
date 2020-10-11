@@ -24,6 +24,8 @@
     "discord.js": "^12.3.1",
     "dotenv": "^8.2.0",
     "expr-eval": "^2.0.2",
+    "fastify": "^3.6.0",
+    "fastify-cors": "^4.1.0",
     "firebase-admin": "^9.2.0",
     "node-fetch": "^2.6.1"
   },
