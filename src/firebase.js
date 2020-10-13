@@ -108,6 +108,16 @@ export const getLatestSession = async ({ discordId }) => {
   return null
 }
 
+export const removeSessionWithUserId = async ({ sessionId, userId }) => {
+  const sessionRef = await db.collection(workSessionCollection).doc(sessionId).get()
+
+  if (sessionRef.exists && sessionRef.data()?.discordId === userId) {
+    await sessionRef.ref.delete()
+  } else {
+    throw new Error()
+  }
+}
+
 export const removeSession = ({ sessionId }) =>
   db.collection(workSessionCollection).doc(sessionId).delete()
 

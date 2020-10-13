@@ -1,6 +1,5 @@
 // Command example: !!me
 export default async function handler(message) {
-  console.log(message.author)
   const { id, username, discriminator } = message.author
 
   message.reply(

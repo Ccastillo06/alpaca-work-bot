@@ -15,7 +15,7 @@ export default async function handler(message, args) {
   const now = new Date()
   const { id, username, discriminator } = message.author
 
-  const subject = args[0]
+  const subject = args[0].toLowerCase()
 
   await saveNewSession({
     discordId: id,
