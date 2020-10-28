@@ -15,7 +15,7 @@ const client = new Discord.Client()
 client.on('message', function (message) {
   if (message.author.bot) return
   if (!message.content.startsWith(prefix)) return
-  if (message.member.user.presence.status === offline) return
+  // if (message.member.user.presence.status === offline) return
 
   const [command, args] = parseCommandAndArgs(message)
 
@@ -52,4 +52,6 @@ client.on('guildMemberUpdate', (userBefore, userAfter) => {
   }
 })
 
-client.login(process.env.BOT_TOKEN)
+client.login(process.env.BOT_TOKEN).then(() => {
+  console.log('Connected to Discord')
+})
